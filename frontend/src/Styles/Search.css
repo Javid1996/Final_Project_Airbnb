@@ -1,0 +1,13 @@
+.search{
+    position: absolute;
+    top:35px;
+    left: 25%;
+    width: 100vw;
+}
+
+.i {
+    background-color: white !important;
+    font-weight: 900 !important;
+    text-transform: inherit !important;
+    color: #ff7779 !important;
+  }
