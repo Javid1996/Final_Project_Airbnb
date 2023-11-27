@@ -25,7 +25,7 @@ const getAllAd = (req, res) => {
     db
     .select().from('events')
     .then(item =>
-            res.send(item)
+            res.json(item)
     )
 
 };
