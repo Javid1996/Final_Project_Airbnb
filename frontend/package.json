@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.6",
@@ -12,12 +13,17 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "carousel": "^0.0.3",
     "date-fns": "^2.30.0",
     "react": "^18.2.0",
     "react-date-range": "^1.4.0",
     "react-dom": "^18.2.0",
+    "react-responsive": "^9.0.2",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.20.0",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
     "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
   },
@@ -44,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-redux": "^8.1.3"
   }
 }

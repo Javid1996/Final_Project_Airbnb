@@ -8,7 +8,7 @@ import Search from "./Search";
 
 
 function Banner(){
-    const [showSearch, setShowSearch]=useState(true)
+    const [showSearch, setShowSearch]=useState(false)
 
     return(
         <div className="banner">

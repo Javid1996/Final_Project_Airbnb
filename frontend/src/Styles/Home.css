@@ -1,4 +1,5 @@
-.home__section{
+.home_section {
     display: flex;
     padding: 30px;
-}
+    flex-wrap: wrap;
+  }

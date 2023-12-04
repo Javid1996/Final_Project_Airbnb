@@ -4,13 +4,13 @@ const router = express.Router()
 
 const {
     getAllAd,
-    getAdById,
+    getOneAd,
     registerUser,
     loginUser
 } = require('./controller')
 
 router.get('/',getAllAd)
-router.get('/:Card',getAdById)
+router.get('/:card_id',getOneAd)
 router.post('/register',registerUser)
 router.post('/login',loginUser)
 
