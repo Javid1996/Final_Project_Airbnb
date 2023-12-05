@@ -21,7 +21,8 @@ function todoProduct(state = initState,action){
                     price:action.payload.price,
                     days:action.payload.inputValue,
                     rating:action.payload.rating,
-                    address:action.payload.address
+                    address:action.payload.address,
+                    order_id:crypto.randomUUID()
                     
                 } 
                 return {...state,Carts:[...state.Carts,cart]}
@@ -31,12 +32,12 @@ function todoProduct(state = initState,action){
             
            
             case DELETE_CART:
-                
+                console.log(action.payload);
                 return{
                     ...state,
-                   
+                   //cardt:[...[1,2,3]]
                     Carts:state.Carts.filter(item=>{
-                        return item.id!=state.Carts.cart.action.payload.event_id
+                        return item.order_id!=action.payload
                     })
                    
                 }

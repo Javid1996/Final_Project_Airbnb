@@ -5,13 +5,15 @@ const router = express.Router()
 const {
     getAllAd,
     getOneAd,
-    registerUser,
+    postReservation,
+    getReservation,
     loginUser
 } = require('./controller')
 
 router.get('/',getAllAd)
 router.get('/:card_id',getOneAd)
-router.post('/register',registerUser)
+// router.post('/reservation',postReservation)
+// router.get('/reservation',getReservation)
 router.post('/login',loginUser)
 
-module.exports = router
+module.exports = router 

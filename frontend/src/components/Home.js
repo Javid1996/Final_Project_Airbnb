@@ -8,6 +8,9 @@ import axios from "axios";
 import CardDetails from "./CardDetails";
 import { useNavigate } from "react-router";
 
+import Header from './Header';
+
+
 function Home() {
   const [data, setData] = useState([]);
 //   const navigate = useNavigate()
@@ -39,6 +42,7 @@ function Home() {
 
   return (
     <div className="home">
+      <Header/>
       <Banner />
 
       {/* <Login/> */}

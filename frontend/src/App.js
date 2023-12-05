@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Homepage from './components/Homepage';
+import Home from './components/Home';
 // import Login from './components/Login.js';
 // import Header from './components/Header';
 import { Routes,Route, Link } from "react-router-dom"
@@ -13,7 +13,7 @@ function App() {
      
       
     <Routes>
-      <Route exact path="/" element={<Homepage />} />
+      <Route exact path="/" element={<Home />} />
       {/* <Route path="/login" element={<Login />} /> */}
       <Route path="/profile" element={<Profile />} />
       <Route  path="/:event_id" element={<CardDetails/>}/>

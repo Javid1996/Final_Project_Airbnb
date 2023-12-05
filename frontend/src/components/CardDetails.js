@@ -14,8 +14,8 @@ import '../Styles/CardDetails.css'
 import { Routes,Route, Link } from "react-router-dom"
 import Header from "./Header.js";
 import CalendarBan from './CalendarBan.js'
-
-
+import { FaStar } from "react-icons/fa";
+import { FaPhoneSquareAlt } from "react-icons/fa";
 
 function CardDetails(props){
     const{event_id}=useParams();
@@ -59,50 +59,72 @@ function CardDetails(props){
     <>
      <Header/>
     <CalendarBan/>
-     
+  
     <div className="card_details">
-            <form onChange={setDayAmountInput}>
-            <label for="quantity">Days amount:</label>
-            {/* <input type="number" id="quantity" name="quantity" min="1" max="5"/> */}
-            <input ref={dayAmountInput} min={1} defaultValue={1}  type="number" id="quantity" name="quantity" />
-            {/* <input ref={dayAmountInput} min={1} defaultValue={2}  type="number" id="quantity" name="quantity" /> */}
            
-            </form>
-            {/* {focusedImg === true ? <img src={defaultImg} /> :<img src={card.event_img} alt=''/>} */}
+           
          {card ?
 
                 
                 
                 <div>
                     <h1> {card.name}</h1>    
+                    <div className="pic-form"> 
 
-                    <Carousel width={500}>
-                        <div >
-                            <img src={card.event_img} className="carousel" />
-                            <p className="legend">Legend 1</p>
-                        </div>
-                        <div>
-                            <img src={card.event_img} className="carousel"/>
-                            <p className="legend">Legend 2</p>
-                        </div>
-                        <div>
-                            <img src={card.event_img} className="carousel"/>
-                            <p className="legend">Legend 3</p>
-                        </div>
-                    </Carousel> 
-                    <div className="card_info">
-                        
-                        <h3> Address:{card.address},{card.cityName}</h3>
-                        <h3>{card.countryName}</h3>
-                        <p>{card.phone_number}</p>
-                        <p>{card.price}</p>
-                        <p>Days amount :{days}</p>
+                        <Carousel thumbWidth='150px' showArrows='true' axis="horizontal" width={750}>
+                            <div >
+                                <img src={card.event_img} className="carousel" />
+                                <p className="legend">{card.name}</p>
+                            </div>
+                            <div>
+                                <img src={card.event_img} className="carousel"/>
+                                <p className="legend">{card.address}</p>
+                            </div>
+                            <div>
+                                <img src={card.event_img} className="carousel"/>
+                                <p className="legend">{card.phone_number}</p>
+                            </div>
+                        </Carousel> 
+                        <form onChange={setDayAmountInput}>
+                            <label for="quantity">Days amount:</label>
+                            <input ref={dayAmountInput} min={1} defaultValue={0}  type="number" id="quantity" name="quantity" />
+                        </form>
+                    </div>    
+                    <div className="flex-container">
+                        <div className='heading-hold'>
+                            <div>
+                            <p className='text-xl '> Superhost. </p>
+                            <p className="text">highly rated hosts who are committed to providing great stays for their guests.</p>
+                            </div>
+                            <div>
+                            <p className='text-xl '>Great check-in experience.  </p>
+                            <p className="text">90% of recent guests gave the check-in process a 10-star rating.</p>
 
+                            </div>
+                            <div>
+                            <p className='text-xl '>Free cancellation for 48 hours. </p>
+                            <p className="text">No questions asked.</p>
+
+                            </div>
+                        </div>
+
+                        <div className="card_info">
+                       
+                            <h3> Address:{card.address},{card.city_name}/{card.country_name}</h3>
+                            
+                             <p> {<FaPhoneSquareAlt />}{card.phone_number}</p>
+                             
+                                <p className="text-xl">${card.price}/Night</p>
+                                <p><FaStar/> {card.rating}</p>
+                            
+                            <p>Days amount :{days}</p>
+
+                            <Button onClick={getReserve} className="reserve">Reserve</Button> 
+                        </div>
                     </div>
                 </div>
             :''}
         
-        <Button onClick={getReserve} className="reserve">Reserve</Button> 
 
         <Link to={`/profile`}><Avatar/></Link>
       

@@ -6,10 +6,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Avatar } from '@mui/material';
 import src1 from '../img/ClickLogo.webp'
 import { Routes,Route, Link } from "react-router-dom"
-// import Image from 'react';
+import  {  useState, useRef } from "react";
 
 
 function Header(){
+   const [current_result, setresult] = useState([]);
+    
+   
+    const filterInput = useRef()
+   
+    const setFilterInput = (e) =>{
+      e.preventDefault();
+      const inputValue = filterInput.current.inputValue
+      console.log('inputValue=====>',inputValue);
+    }
 
     return(
 
@@ -25,8 +35,10 @@ function Header(){
          </Link>
 
          <div className='header_center'>
-            <input type='text'/>
+            
+            <input ref={filterInput} onChange={setFilterInput} type='text'/>
              <SearchIcon/> 
+            
          </div>
 
          <div className='header_right'>

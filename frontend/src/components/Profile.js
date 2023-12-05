@@ -1,17 +1,74 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import {connect} from 'react-redux';
 import Header from "./Header";
 import '../Styles/Profile.css'
 import {star} from '../img/star.png'
 import {Button} from "@mui/material";
 import { DeleteCart } from "../actions";
+import  axios  from "axios"; 
+
 
 function Profile(props) {
     console.log('props in Profile',props);
 
-     function deleteReservedCard(){
-        props.card?._todoProduct.Carts.Delete(cart)
+    let [savedReservations, setSavedReservations] = useState([]);
+
+     function deleteReservedCard(uuid){
+        console.log('uuid>>>>',uuid);
+        props.Delete(uuid)
      }
+
+    //  useEffect(()=>{
+    //     // get saved reservations from database and write into savedReservations
+    //     axios.get("http://localhost:4005/reservation")
+    //     .then(response=>{
+    //     let fetchedReservations = response.data;
+    //     setSavedReservations([...fetchedReservations]);
+    //     })
+    //     },[]);
+     
+
+     const sendRequest=(item)=>{
+        const day = Number(item?.days);
+        let price = Number(item?.price);
+        item.days=day;
+        item.price=price;
+        axios.post('http://localhost:4005/reservation',{item})
+          .then(function (response) {
+            console.log('response',response);
+            let newState = [...savedReservations, response.data[0]]
+            setSavedReservations(newState)
+            console.log('savedReservations',savedReservations);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(()=>{
+            deleteReservedCard(item.order_id)
+          });
+         
+        }
+        
+    //     const getReservedRequest=(order_id)=>{
+    //         axios.get('http://localhost:4005/reservation',{
+    //             params:{
+    //                 id: order_id
+    //             }
+    //         })
+    //         .then(function (response) {
+    //           console.log('response FromReservation',response);
+    //           response.json()
+    //         })
+    //         .then(data=>{
+    //             console.log('data from reservation',data);
+    //         })
+    //         .catch(function (error) {
+    //           console.log(error);
+    //         });
+    //   }
+
+
+console.log('reservation.......',savedReservations);
     return(
         <div className="profile">
         <Header/>
@@ -19,8 +76,8 @@ function Profile(props) {
        
         props.card?._todoProduct.Carts.map((item)=>{
             const day = Number(item?.days);
-
-            const price = Number(item?.price.substring(1));
+            console.log('item',item);
+            let price = typeof item.price !== "string"? item.price : Number(item?.price?.substring(1));
                 return(
                     
                         // <div key={item?.id}className="reserve_section">
@@ -68,8 +125,8 @@ function Profile(props) {
 
                                 </div>
                                 <div className="reserve__section_buttons">
-                                    <Button onClick={deleteReservedCard} className="dlt_button">Delete</Button>
-                                    <Button className="sbt_button">Submit</Button>
+                                    <Button onClick={()=>deleteReservedCard(item?.order_id)} className="dlt_button">Delete</Button>
+                                    <Button onClick={()=>sendRequest(item)}  className="sbt_button">Submit</Button>
                                 </div>
                                 
                             
@@ -79,7 +136,10 @@ function Profile(props) {
 })
      
     :'' }
-    </div>
+           {/* <div className="reserved_items">
+                {savedReservations.map()}
+           </div> */}
+        </div>
      ) 
 
        
@@ -92,7 +152,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return{
        
-        Delete:cart=>dispatch(DeleteCart(cart))
+        Delete:uuid => dispatch(DeleteCart(uuid))
      
     }
 }
