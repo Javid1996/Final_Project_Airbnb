@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../Styles/Header.css'
 import SearchIcon from '@mui/icons-material/Search';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -7,22 +7,23 @@ import { Avatar } from '@mui/material';
 import src1 from '../img/logo/logo3.png'
 import { Routes,Route, Link } from "react-router-dom"
 import  {  useState, useRef } from "react";
-import {connect,useSelector} from 'react-redux';
 import {useDispatch} from "react-redux"
-import { deleteJwtToken } from '../actions';
 // import { mapStateToProps } from 'react-redux';
+import {connect,useSelector} from 'react-redux';
+import { deleteJwtToken } from '../actions';
 
-
-
-function Header(props){
+function Header2(props){
    let reducer = useSelector(state=> state);
-   let user = useSelector(state=> state._todoProduct.user);
    let dispatch = useDispatch();
-
-   console.log('reducer>>>>>>>',reducer);
+   console.log('reducer2>>>>>>>',reducer);
    const [currentResult, setResult] = useState([]);
+   let user = useSelector(state=> state._todoProduct.user);
    
    console.log('current value====',currentResult);
+
+   useEffect(()=>{
+      console.log(user)
+   }, [user])
 
     return(
 
@@ -30,30 +31,32 @@ function Header(props){
         <Link to={`/`}>
         <img
              className="logo"
+            //  src="https://i.pinimg.com/originals/3c/bf/be/3cbfbe148597341fa56f2f87ade90956.png"
              src={src1}
+            //  src='Users/Javid/Desktop/Final_Project_Airbnb/frontend/public/img'
              alt=""
                 />
          </Link>
 
-         <div className='header_center'>
+         {/* <div className='header_center'>
             <form>
-               <input className='main_search' value={currentResult} onChange={(e)=> {
+               <input value={currentResult} onChange={(e)=> {
                   props.onChange(e.target.value)
                   setResult(e.target.value)
                }} type='text'/>
                <SearchIcon/> 
             </form>
             
-         </div>
+         </div> */}
 
          <div className='header_right'>
             
          {reducer._todoProduct.jwtToken === undefined ? <Link to='/signin'><p>Login</p></Link> : <Link onClick={()=>dispatch(deleteJwtToken())}> Sign Out </Link>}
             
-            {/* <LanguageIcon/> */}
+            <LanguageIcon/>
             <ExpandMoreIcon/>
-            {reducer._todoProduct.user !== undefined &&<p className='username'>{user.username}</p>}
             {reducer._todoProduct.user !== undefined && <Link to={`/profile`}><img style={{width: 50, height: 50}} src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.username}`}/></Link>}
+            {reducer._todoProduct.user !== undefined &&<p>{user.username}</p>}
          </div>
        </div>
         
@@ -62,4 +65,4 @@ function Header(props){
 
 
 
-export default Header
+export default Header2

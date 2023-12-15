@@ -62,3 +62,17 @@
     display: flex;
     
 }
+
+.reserve_btn_div{
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reserve_btn{
+    background-color: #ff7779 !important;
+    font-weight: 900 !important;
+    text-transform: inherit !important;
+    color: white !important;
+}
+

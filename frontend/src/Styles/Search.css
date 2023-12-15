@@ -1,6 +1,6 @@
 /* .search{
     position: absolute;
-    top:35px;
+    top:0px;
     left: 25%;
     width: 100vw;
 } */
@@ -40,8 +40,9 @@
   .search {
     position: absolute;
     top: 35px;
-    left: 25%;
+    right: -60%;
     width: 100vw;
+    /* z-index: 0; */
     /* height: 40vh; */
 }
 
@@ -63,8 +64,9 @@
     position: absolute;
     left: 0;
     height: 30px;
-    top: 397px;
+    top: 382px;
     border: none;
+    font-size: 22px;
   }
   
 .search > input:focus {

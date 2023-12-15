@@ -38,7 +38,7 @@ a {
     margin: 15px 0;
 }
 
-.container {
+.log-container {
     background: #fff;
     border-radius: 90px;
     box-shadow: 30px 14px 28px rgba(0, 0, 5, .2), 0 10px 10px rgba(0, 0, 0, .2);
@@ -198,33 +198,33 @@ button:focus {
 }
 
 /* Move signin to right */
-.container.right-panel-active .sign-in-container {
+.log-container.right-panel-active .sign-in-container {
     transform: translateY(100%);
 }
 
 /* Move overlay to left */
-.container.right-panel-active .overlay-container {
+.log-container.right-panel-active .overlay-container {
     transform: translateX(-100%);
 }
 
 /* Bring signup over signin */
-.container.right-panel-active .sign-up-container {
+.log-container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
 }
 
 /* Move overlay back to right */
-.container.right-panel-active .overlay {
+.log-container.right-panel-active .overlay {
     transform: translateX(50%);
 }
 
 /* Bring back the text to center */
-.container.right-panel-active .overlay-left {
+.log-container.right-panel-active .overlay-left {
     transform: translateY(0);
 }
 
 /* Same effect for right */
-.container.right-panel-active .overlay-right {
+.log-container.right-panel-active .overlay-right {
     transform: translateY(20%);
 }

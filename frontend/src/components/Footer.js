@@ -1,18 +1,19 @@
 import React from 'react'
+import '../Styles/Footer.css'
 
-const Footer2 = () => {
+const Footer = () => {
     return (
-        <div className='footer2'>
+        <div className='footer'>
 
-            <footer >
-                <div>
+           
+                <div className='left_footer'>
                     <span className="footer-title">Services</span>
                     <a className="link link-hover">Branding</a>
                     <a className="link link-hover">Design</a>
                     <a className="link link-hover">Marketing</a>
                     <a className="link link-hover">Advertisement</a>
                 </div>
-                <div>
+                <div className='right_footer'>
                     <span className="footer-title">Company</span>
                     <a className="link link-hover">About us</a>
                     <a className="link link-hover">Contact</a>
@@ -20,10 +21,10 @@ const Footer2 = () => {
                     <a className="link link-hover">Press kit</a>
                 </div>
                
-            </footer>
+           
             
         </div>
     )
 }
 
-export default Footer2
+export default Footer

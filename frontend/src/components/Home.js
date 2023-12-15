@@ -3,17 +3,17 @@ import "../Styles/Home.css";
 import Banner from "./Banner";
 import Card from "./Card";
 import { useEffect, useState } from "react";
-// import Login from './Login'
+// import Login from './SignIn'
 import axios from "axios";
 import CardDetails from "./CardDetails";
 import { useNavigate } from "react-router";
-
+import Footer from "./Footer";
 import Header from './Header';
 
 
 function Home() {
   const [data, setData] = useState([]);
-//   const navigate = useNavigate()
+
 
   useEffect(() => {
     const url = "http://localhost:4005/cards/";
@@ -28,21 +28,31 @@ function Home() {
       } catch (err) {
       console.log(err);
       }
-    //   try {
-    //     const { data } = axios.get(url, { mode: "no-cors" });
-
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
+    
     }
     fetchData();
   }, []);
-  // console.log(data);
+ 
+  const handleInputChange = (inputValue) =>{
+    console.log('INPUTVALUE ------->',inputValue);
+
+    axios.get(`http://localhost:4005/places/${inputValue}`)
+    .then(response => {
+      console.log(response.data);
+      setData(response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  
+    // setData(inputValue)
+ }
+ console.log('last data',data);
 
   return (
     <div className="home">
-      <Header/>
+      
+      <Header onChange={handleInputChange}/>
       <Banner />
 
       {/* <Login/> */}
@@ -52,12 +62,15 @@ function Home() {
           return console.log(el.name);
         })}
       </div> */}
+      
 
       <div className="home_section">
         {data.map((el) => {
           return ( <Card  key={el.event_id} element={el} />)
         })}
+        
       </div>
+      <Footer/>
     </div>
   );
 }

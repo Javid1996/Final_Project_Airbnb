@@ -5,11 +5,11 @@
     position:sticky;
     top: 0;
     background-color: white;
-    z-index: 2;
+    z-index: 99;
     width: 100%;
 }
 .logo{
-    height: 120px;
+    height: 80px;
     margin-left: 30px;
     z-index: 100;
     object-fit: contain;
@@ -26,7 +26,7 @@
     border: 1px solid black;
 }
 
-.header_center > input{
+.main_search{
     border: none;
     padding: 10px;
     outline-width: 0;
@@ -38,6 +38,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 15vw;
+    width: 17vw;
     margin-right:50px ;
+}
+.username{
+cursor: pointer;
+font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+font-size: 22px;
 }

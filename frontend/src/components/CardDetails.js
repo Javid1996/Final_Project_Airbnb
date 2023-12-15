@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useState,useEffect,useRef } from "react";
 import Search from "./Search";
 import {Button} from "@mui/material";
-import {AddCart} from '../actions'
+import {AddCart,inputDate} from '../actions'
 import {connect} from 'react-redux';
 import Profile from "./Profile";
 import { Avatar } from '@mui/material';
@@ -16,10 +16,19 @@ import Header from "./Header.js";
 import CalendarBan from './CalendarBan.js'
 import { FaStar } from "react-icons/fa";
 import { FaPhoneSquareAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import Footer from "./Footer";
 
 function CardDetails(props){
+    console.log('card props------>',props);
+    let {diffInDays,startDate,endDate,peopleNumber} = props._products.dateInfo
+    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+    const formattedStartDate = startDate.toLocaleDateString('en-US', options);
+    const formattedEndDate = endDate.toLocaleDateString('en-US', options);
+    console.log('FORRRRMAAAAAAAT START',formattedStartDate);
+    console.log('FORRRRMAAAAAAAT ENDDDD',formattedEndDate);
+
     const{event_id}=useParams();
-    // console.log(event_id);
     const[card,setCard]=useState();
     const[days,setDays]=useState();
     // const [focusedImg, setFocusedImg] = useState(false);
@@ -37,17 +46,19 @@ function CardDetails(props){
     },[]);
 
     function getReserve(){
+        
         props.Add(card)
+        toast("Reservation added to profile!")
     };
 
     const setDayAmountInput = (e)=>{
         e.preventDefault();
         const inputValue= dayAmountInput.current.value
-        console.log('inputValue',inputValue);
+        // console.log('inputValue',inputValue);
         setDays(inputValue);
-        console.log('after SetDays',days);
+        // console.log('after SetDays',days);
         const updatedCard={...card,inputValue}
-        console.log('43 line--->',updatedCard);
+        // console.log('43 line--->',updatedCard);
         setCard(updatedCard)
     }
 
@@ -77,11 +88,19 @@ function CardDetails(props){
                                 <p className="legend">{card.name}</p>
                             </div>
                             <div>
-                                <img src={card.event_img} className="carousel"/>
+                                <img src={card.img_1} className="carousel"/>
                                 <p className="legend">{card.address}</p>
                             </div>
                             <div>
-                                <img src={card.event_img} className="carousel"/>
+                                <img src={card.img_2} className="carousel"/>
+                                <p className="legend">{card.phone_number}</p>
+                            </div>
+                            <div>
+                                <img src={card.img_3} className="carousel"/>
+                                <p className="legend">{card.phone_number}</p>
+                            </div>
+                            <div>
+                                <img src={card.img_4} className="carousel"/>
                                 <p className="legend">{card.phone_number}</p>
                             </div>
                         </Carousel> 
@@ -114,21 +133,29 @@ function CardDetails(props){
                             
                              <p> {<FaPhoneSquareAlt />}{card.phone_number}</p>
                              
-                                <p className="text-xl">${card.price}/Night</p>
+                                <p className="text-xl">{card.price}/Night</p>
                                 <p><FaStar/> {card.rating}</p>
-                            
-                            <p>Days amount :{days}</p>
-
-                            <Button onClick={getReserve} className="reserve">Reserve</Button> 
+                            { props._products.dateInfo && <>
+                            {/* <p>Date :{props._products.dateInfo.startDate.toString()}</p>
+                            <p>Date :{props._products.dateInfo.endDate.toString()}</p> */}
+                            <p>Start Date :{formattedStartDate}</p>
+                            <p>End Date :{formattedEndDate}</p>
+                            <p>Days amount :{diffInDays}</p>
+                            <p>Number of Guests :{peopleNumber}</p>
+                            </> 
+}
+                            <div className="reserve_btn_div">
+                                <Button onClick={getReserve} className="reserve_btn" variant="outlined">Reserve</Button> 
+                            </div>
                         </div>
                     </div>
                 </div>
             :''}
         
 
-        <Link to={`/profile`}><Avatar/></Link>
       
     </div>
+        <Footer/>
     
         
    </> 
@@ -148,8 +175,8 @@ const mapStateToProps = state =>{
 function mapDispatchToProps(dispatch){
     return{
        
-        Add:card=>dispatch(AddCart(card))
-     
+        Add:card=>dispatch(AddCart(card)),
+        // inputDate:days=>dispatch(inputDate(days))
     }
 }
 

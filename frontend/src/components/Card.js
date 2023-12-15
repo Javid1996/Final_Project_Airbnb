@@ -10,15 +10,15 @@ function Card(props) {
         
         <div  className="card">
             <Link to={`/${event_id}`}>
-                <img src={event_img} alt=''/>
+                <img className="card_img" src={event_img} alt=''/>
+            </Link>
                 <div className="card__info ">
                     <h2>{name}</h2>
                     <h4>Address: {address},{cityName},{countryName}</h4>
-                    <h4>Country: </h4>
+                    
                     <h3>{price}/Day</h3>
                     <p>Rating {rating}</p>
                 </div>
-            </Link>
         </div>
             
     )
