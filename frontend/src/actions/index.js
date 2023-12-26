@@ -1,15 +1,15 @@
 export const ADD_CART = 'ADD_CART' ;
 export const DELETE_CART = 'DELETE_CART';
-// export const INPUT_DATE = 'INPUT_DATE';
+
 export const SET_JWT_TOKEN ='SET_JWT_TOKEN'
 export const DELETE_JWT_TOKEN ='DELETE_JWT_TOKEN'
-// Action Types
+
 export const SEND_START_DATE = 'SEND_START_DATE';
 export const SEND_END_DATE = 'SEND_END_DATE';
 export const SEND_DIFF_IN_DAYS = 'SEND_DIFF_IN_DAYS';
 export const SEND_PEOPLE_NUMBER = 'SEND_PEOPLE_NUMBER';
 export const SET_USER = 'SET_USER';
-
+export const CLEAR_USER = 'CLEAR_USER';
 
 export function AddCart(payload){
     return {
@@ -77,3 +77,8 @@ export function setUser(payload){
     payload: number
   });
   
+  export const clearUser = () => {
+    return {
+        type: CLEAR_USER,
+    };
+};

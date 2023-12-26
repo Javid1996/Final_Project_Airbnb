@@ -113,21 +113,17 @@ const signIn= (req, res) => {
     .where('username', '=', username)
     .then(data => {
       if (data.length) {
-        // Compare provided password with stored hashed password
         bcrypt.compare(password, data[0].password, (err, result) => {
           if (err) {
             res.status(500).json('Error during password comparison');
           } else if (result) {
-            // Passwords match, generate and return JWT token
             const token = jwt.sign({ username: username }, secretKey, { expiresIn: '10h' });
             res.json({ token });
           } else {
-            // Passwords do not match
             res.status(400).json('Invalid credentials');
           }
         });
       } else {
-        // No user found with that login
         res.status(400).json('Invalid credentials');
       }
     })
@@ -135,19 +131,8 @@ const signIn= (req, res) => {
 
 }
 
-const getUserReservations = (req, res) => {
-    
-}
 
-// const getAllAd = (req, res) => {
-//     db('events as e')
-//     .join('country as c', 'e.fk_country_id','c.country_id')
-//     .select('e.name','e.price','c.country','e.address','e.event_img').where('e.fk_country_id','=','c.country_id')
-//     .then(item =>
-//             res.json(item)
-//     )
 
-// };
 
 const getOneAd = (req, res) => {
     
@@ -248,12 +233,12 @@ const postReservation = (req,res) =>{
         db('reservation')
         .insert({
             fk_event_id: req.body.item.id,
-            total_price: (req.body.item.price*req.body.diffInDays*req.body.peopleNumber)+(req.body.item.price*req.body.diffInDays*0.1*req.body.peopleNumber)+20,
+            total_price: (req.body.item.price*req.body.item.diffInDays*req.body.item.peopleNumber)+(req.body.item.price*req.body.item.diffInDays*0.1*req.body.item.peopleNumber)+20,
             order_id:req.body.item.order_id,
             reservation_uid:reservation_uid,
             fk_user_id: user[0].user_id,  
-            days: req.body.diffInDays,
-            people_number:req.body.peopleNumber,
+            days: req.body.item.diffInDays,
+            people_number:req.body.item.peopleNumber,
             start_date:req.body.MDYStartDate,
             end_date:req.body.MDYEndDate
         })
@@ -278,50 +263,27 @@ const postReservation = (req,res) =>{
 }
 
 
-const registerUser = (req,res)=>{
-    const cryptedPass = bcrypt.hashSync(req.body.password,saltRounds);
-    const newUser = {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        username: req.body.username,
-        birth_date: req.body.birth_date,
-        email: req.body.email,
-        password:cryptedPass
-
-      };
- 
-    db('users')
-    .insert({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        username: req.body.username,
-        birth_date: req.body.birth_date,
-        email: req.body.email,
-        password:cryptedPass    
-    })
-    .then(item=>
-        res.send(item) 
-        )
-
+const deleteReservation = (req, res) => {
+    const { reservationId } = req.params;
+console.log('uid  to cto tebe nujno ------>' ,req.params.reservationId);
+    db('reservation')
+    .where('reservation_uid', '=', req.params.reservationId)
+    .del()
+        .then(deletedRows => {
+            if (deletedRows > 0) {
+                
+                res.status(200).json({ message: 'Reservation deleted successfully' });
+            } else {
+                
+                res.status(404).json({ error: 'Reservation not found' });
+            }
+        })
+        .catch(err => {
+            
+            console.error('Error deleting reservation:', err);
+            res.status(500).json({ error: 'Internal server error' });
+        });
 };
-
-
-
-
-// const loginUser = (req,res)=>{
-// const{reqUsername,reqPassword}=req.body;
-// db("users").select()
-// .where({username: reqUsername})
-// .then(item=>{
-//     if(item.length>0){
-//         if(bcrypt.compareSync(reqPassword,password)){
-//             res.send(`wellcome`)
-//         }else{
-//             res.send(`wrong`) 
-//         }}
-
-//     })
-// }
 
 
 
@@ -331,10 +293,10 @@ module.exports = {
     getAllAd,
     getOneAd,
     postReservation,
-    // loginUser,
     getReservation,
     getPlaces,
     signUp,
     signIn,
-    getUser
+    getUser,
+    deleteReservation
 }

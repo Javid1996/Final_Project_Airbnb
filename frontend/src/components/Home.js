@@ -32,20 +32,53 @@ function Home() {
     }
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const url = "http://localhost:4005/cards/";
+  
+  //   async function fetchData(inputValue) {
+  //     try {
+  //       let response;
+  //       if (!inputValue || inputValue === "") {
+  //         response = await fetch(url, { method: 'GET' });
+  //       } else {
+  //         response = await axios.get(`http://localhost:4005/places/${inputValue}`);
+  //       }
+        
+  //       const respjs = await response.json();
+  //       setData(respjs);
+  //       console.log('response', respjs);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  
+  //   fetchData();
+  // }, [inputValue]);
  
   const handleInputChange = (inputValue) =>{
-    console.log('INPUTVALUE ------->',inputValue);
-
-    axios.get(`http://localhost:4005/places/${inputValue}`)
-    .then(response => {
-      console.log(response.data);
-      setData(response.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    const url = "http://localhost:4005/cards/";
+    try{
+      if (!inputValue || inputValue === "") {
+        axios.get(url)
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
   
-    // setData(inputValue)
+      }else{console.log('INPUTVALUE ------->',inputValue);
+      axios.get(`http://localhost:4005/places/${inputValue}`)
+      .then(response => {
+        console.log(response.data);
+        setData(response.data)
+      })}
+    }catch(err) {
+        console.log(err)
+    }
+  
+    setData(inputValue)
  }
  console.log('last data',data);
 
@@ -65,9 +98,11 @@ function Home() {
       
 
       <div className="home_section">
-        {data.map((el) => {
-          return ( <Card  key={el.event_id} element={el} />)
-        })}
+      {Array.isArray(data) ? (
+    data.map((el) => <Card key={el.event_id} element={el} />)
+  ) : (
+    <p>No data available</p>
+  )}
         
       </div>
       <Footer/>

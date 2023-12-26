@@ -1,7 +1,7 @@
 import React from "react";
 import '../Styles/Card.css'
 import { Link } from "react-router-dom";
-// import {GradeIcon} from '@mui/material';
+import { FaStar } from "react-icons/fa";
 
 function Card(props) {
     const {event_img,event_id,name,address,price,countryName,rating,cityName} = props.element
@@ -15,9 +15,10 @@ function Card(props) {
                 <div className="card__info ">
                     <h2>{name}</h2>
                     <h4>Address: {address},{cityName},{countryName}</h4>
-                    
-                    <h3>{price}/Day</h3>
-                    <p>Rating {rating}</p>
+                    <div className="card__info__end">
+                    <h3>${price}/Day</h3>
+                    <p><FaStar/> {rating}</p>
+                    </div>
                 </div>
         </div>
             

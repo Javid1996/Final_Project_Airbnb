@@ -13,13 +13,14 @@ import { FaPhoneSquareAlt } from "react-icons/fa";
 function Profile(props) {
 
     console.log('props in Profile',props);
-    let {diffInDays,startDate,endDate,peopleNumber} = props.card?._todoProduct.dateInfo
-    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    const MDYoptions = { month: 'short', day: 'numeric', year: 'numeric' };
-    const formattedStartDate = startDate.toLocaleDateString('en-US', options);
-    const formattedEndDate = endDate.toLocaleDateString('en-US', options);
-    const MDYStartDate = startDate.toLocaleDateString('en-US', MDYoptions);
-    const MDYEndDate = endDate.toLocaleDateString('en-US', MDYoptions);
+    // let {diffInDays,startDate,endDate,peopleNumber} = props.card?._todoProduct.Carts[0]
+    // const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+    // const formattedStartDate = startDate.toLocaleDateString('en-US', options);
+    // const formattedEndDate = endDate.toLocaleDateString('en-US', options);
+
+    // const MDYoptions = { month: 'short', day: 'numeric', year: 'numeric' };
+    // const MDYStartDate = startDate.toLocaleDateString('en-US', MDYoptions);
+    // const MDYEndDate = endDate.toLocaleDateString('en-US', MDYoptions);
 
 
     // console.log('props in Profile diffInDays',diffInDays);
@@ -49,13 +50,13 @@ function Profile(props) {
         }, [])
      
 
-     const sendRequest=(item,MDYStartDate,MDYEndDate,peopleNumber,diffInDays)=>{
+     const sendRequest=(item,MDYStartDate,MDYEndDate)=>{
         
         const day = Number(item?.days);
         let price = Number(item?.price);
         item.days=day;
         item.price=price;
-        axios.post('http://localhost:4005/reservation',{item,MDYStartDate,MDYEndDate,peopleNumber,diffInDays} , {
+        axios.post('http://localhost:4005/reservation',{item,MDYStartDate,MDYEndDate} , {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -86,7 +87,11 @@ console.log('SavedReservation.......',savedReservations);
        { props.card?
        
         props.card?._todoProduct.Carts.map((item)=>{
-            const day = Number(item?.days);
+           
+            const MDYoptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            const MDYStartDate = item.startDate.toLocaleDateString('en-US', MDYoptions);
+            const MDYEndDate = item.endDate.toLocaleDateString('en-US', MDYoptions);
+
             console.log('item',item);
             let price = typeof item.price !== "string"? item.price : Number(item?.price?.substring(1));
                 return(
@@ -106,14 +111,14 @@ console.log('SavedReservation.......',savedReservations);
                             <div className="div_h2"><h2 className="h2_price_details">Price details</h2></div>
                             <div className="price_details">
                                 <div className="price_details_left">
-                                    <p>{item?.price} x {diffInDays} night(s) x {peopleNumber} person(s)</p>
+                                    <p>{item?.price} x {item.diffInDays} night(s) x {item.peopleNumber} person(s)</p>
                                     <p className="underscore">Cleaning fee</p>
                                     <p className="underscore">Click&Go service fee</p>
                                 </div>
                                 <div className="price_details_right">
-                                    <p className="bolder-text">${diffInDays * price * peopleNumber}</p>
+                                    <p className="bolder-text">${item.diffInDays * price * item.peopleNumber}</p>
                                     <p className="bolder-text">$20</p>
-                                    <p className="bolder-text">${diffInDays * price * 0.1 * peopleNumber}</p>
+                                    <p className="bolder-text">${item.diffInDays * price * 0.1 * item.peopleNumber}</p>
                                 </div>
                             </div>
                                 <div className="price_details_total">
@@ -122,13 +127,13 @@ console.log('SavedReservation.......',savedReservations);
                                             <p className="red-text bolder-text">Total (USD)</p>
                                     </div>
                                     <div className="price_details_total-right">
-                                            <p className="red-text bolder-text">${(diffInDays * price * peopleNumber) + 20 + (diffInDays * price * 0.1 * peopleNumber)}</p>
+                                            <p className="red-text bolder-text">${(item.diffInDays * price * item.peopleNumber) + 20 + (item.diffInDays * price * 0.1 * item.peopleNumber)}</p>
                                     </div>
 
                                 </div>
                                 <div className="reserve__section_buttons">
                                     <Button onClick={()=>deleteReservedCard(item?.order_id)} className="dlt_button red_btn">Delete</Button>
-                                    <Button onClick={()=>sendRequest(item,MDYStartDate,MDYEndDate,peopleNumber,diffInDays)}  className="sbt_button red_btn">Submit</Button>
+                                    <Button onClick={()=>sendRequest(item,MDYStartDate,MDYEndDate)}  className="sbt_button red_btn">Submit</Button>
                                 </div>
                                 
                             
@@ -145,6 +150,19 @@ console.log('SavedReservation.......',savedReservations);
                     console.log('resservationItem',resservationItem);
                     const {address,city_name,country_name,event_img,name,phone_number,price,rating,total_price,reservation_uid,username,first_name,last_name,days,people_number,end_date,start_date} = resservationItem;
                    
+                    const deleteReservation = (reservationId) => {
+                        axios.delete(`http://localhost:4005/reservation/${reservationId}`)
+                        .then(() => {
+                            const updatedReservations = savedReservations.filter(item => item.reservation_uid !== reservationId);
+                            
+                            setSavedReservations(updatedReservations);
+                            console.log(`Deleted reservation with UID: ${reservationId}`);
+                        })
+                        .catch(error => {
+                            console.error('Error deleting reservation:', error);
+                        });
+                    };
+
                     return(
                         <div key={reservation_uid} className="reserved_item">
                             <div>
@@ -184,6 +202,7 @@ console.log('SavedReservation.......',savedReservations);
 
                                 </div>
                             </div>
+                            <Button onClick={() => deleteReservation(reservation_uid)} className="dlt_button red_btn">Delete</Button>
                         </div>
                     )
                 })}

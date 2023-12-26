@@ -8,7 +8,8 @@ const {
   getPlaces,
   signIn,
   signUp,
-  getUser
+  getUser,
+  deleteReservation
 } = require('./routes/controller')
 
 const {verifyToken} = require('./middleware/authMiddleware')
@@ -22,14 +23,15 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use('/cards',router);
-app.use('/auth',router);
-app.get('/reservation',getReservation)
+// app.use('/auth',router.authRouter);
 app.get('/user',getUser)
-app.get('/places/:name',getPlaces)
-app.post('/reservation',postReservation);
 app.post('/sign-in',signIn)
 app.post('/sign-up',signUp)
-// app.use('/:',router)
+app.get('/reservation',getReservation)
+app.get('/places/:name',getPlaces)
+app.post('/reservation',postReservation);
+app.delete('/reservation/:reservationId', deleteReservation);
+
 app.use(cors()); 
 
 

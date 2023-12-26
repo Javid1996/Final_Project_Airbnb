@@ -10,7 +10,9 @@ import  {  useState, useRef } from "react";
 import {useDispatch} from "react-redux"
 // import { mapStateToProps } from 'react-redux';
 import {connect,useSelector} from 'react-redux';
-import { deleteJwtToken } from '../actions';
+import { deleteJwtToken, clearUser } from '../actions';
+// import { useHistory } from "react-router-dom"
+
 
 function Header2(props){
    let reducer = useSelector(state=> state);
@@ -18,12 +20,15 @@ function Header2(props){
    console.log('reducer2>>>>>>>',reducer);
    const [currentResult, setResult] = useState([]);
    let user = useSelector(state=> state._todoProduct.user);
+   // const history = useHistory();
    
    console.log('current value====',currentResult);
 
    useEffect(()=>{
       console.log(user)
    }, [user])
+
+   console.log('reducer----->',reducer);
 
     return(
 
@@ -51,12 +56,12 @@ function Header2(props){
 
          <div className='header_right'>
             
-         {reducer._todoProduct.jwtToken === undefined ? <Link to='/signin'><p>Login</p></Link> : <Link onClick={()=>dispatch(deleteJwtToken())}> Sign Out </Link>}
+         {reducer._todoProduct.jwtToken === undefined ? <Link to='/signin'><p>Login</p></Link> : <Link to='/' onClick={()=>{dispatch(deleteJwtToken()) ;dispatch(clearUser());}}><p>Sign Out</p></Link>}
             
             <LanguageIcon/>
             <ExpandMoreIcon/>
+            {reducer._todoProduct.user !== undefined ? <p className='username'>{user.username}</p> :<p></p>}
             {reducer._todoProduct.user !== undefined && <Link to={`/profile`}><img style={{width: 50, height: 50}} src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.username}`}/></Link>}
-            {reducer._todoProduct.user !== undefined &&<p>{user.username}</p>}
          </div>
        </div>
         

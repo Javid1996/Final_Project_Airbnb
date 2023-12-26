@@ -9,7 +9,7 @@ import { Routes,Route, Link } from "react-router-dom"
 import  {  useState, useRef } from "react";
 import {connect,useSelector} from 'react-redux';
 import {useDispatch} from "react-redux"
-import { deleteJwtToken } from '../actions';
+import { deleteJwtToken , clearUser } from '../actions';
 // import { mapStateToProps } from 'react-redux';
 
 
@@ -23,6 +23,7 @@ function Header(props){
    const [currentResult, setResult] = useState([]);
    
    console.log('current value====',currentResult);
+   console.log('reducer----->',reducer);
 
     return(
 
@@ -48,11 +49,12 @@ function Header(props){
 
          <div className='header_right'>
             
-         {reducer._todoProduct.jwtToken === undefined ? <Link to='/signin'><p>Login</p></Link> : <Link onClick={()=>dispatch(deleteJwtToken())}> Sign Out </Link>}
+         {reducer._todoProduct.jwtToken === undefined ? <Link to='/signin'><p>Login</p></Link> : <Link to='/' onClick={()=>{dispatch(deleteJwtToken()) ;dispatch(clearUser())}}> Sign Out </Link>}
             
             {/* <LanguageIcon/> */}
             <ExpandMoreIcon/>
-            {reducer._todoProduct.user !== undefined &&<p className='username'>{user.username}</p>}
+            {reducer._todoProduct.user !== undefined && <p className='username'>{user.username}</p>}
+          
             {reducer._todoProduct.user !== undefined && <Link to={`/profile`}><img style={{width: 50, height: 50}} src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.username}`}/></Link>}
          </div>
        </div>

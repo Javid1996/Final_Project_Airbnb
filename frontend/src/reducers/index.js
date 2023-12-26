@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {ADD_CART, DELETE_CART,SET_JWT_TOKEN,DELETE_JWT_TOKEN,SEND_START_DATE,SEND_END_DATE,SEND_PEOPLE_NUMBER,SEND_DIFF_IN_DAYS, SET_USER} from  '../actions/index';
+import {ADD_CART, DELETE_CART,SET_JWT_TOKEN,DELETE_JWT_TOKEN,SEND_START_DATE,SEND_END_DATE,SEND_PEOPLE_NUMBER,SEND_DIFF_IN_DAYS, SET_USER,CLEAR_USER} from  '../actions/index';
 
 
 const initState= {
@@ -32,7 +32,11 @@ function todoProduct(state = initState,action){
                     days:action.payload.inputValue,
                     rating:action.payload.rating,
                     address:action.payload.address,
-                    order_id:crypto.randomUUID()
+                    order_id:crypto.randomUUID(),
+                    startDate: state.dateInfo.startDate, 
+                    endDate: state.dateInfo.endDate, 
+                    diffInDays: state.dateInfo.diffInDays, 
+                    peopleNumber: state.dateInfo.peopleNumber
                     
                 } 
                 return {...state,Carts:[...state.Carts,cart]}
@@ -70,13 +74,18 @@ function todoProduct(state = initState,action){
                     
                     return{...state,jwtToken:action.payload.token}
 
-                case SET_USER:
-                    return{...state,user:action.payload.user}
+                    
+                    case DELETE_JWT_TOKEN:
+                        return{...state,jwtToken:undefined}
 
-                case DELETE_JWT_TOKEN:
-                    return{...state,jwtToken:undefined}
-
-
+                    
+                    case SET_USER:
+                        return{...state,user:action.payload.user}
+                    
+                    case CLEAR_USER:
+                        return{...state,user:undefined}
+                        
+                        
         default:
             return state;
     }

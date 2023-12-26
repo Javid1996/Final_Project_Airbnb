@@ -10,18 +10,24 @@ const {
     getPlaces,
     signIn,
     signUp,
-    getUser
+    getUser,
+    deleteReservation
 } = require('./controller')
+
+
+const authRouter = express.Router();
+authRouter.get('/user',getUser)
+authRouter.post('/sign-in',signIn)
+authRouter.post('/sign-up',signUp)
 
 router.get('/',getAllAd)
 router.get('/:card_id',getOneAd)
-router.get('/user',getUser)
 router.get('/places/:name',getPlaces)
-router.post('/sign-in',signIn)
-router.post('/sign-up',signUp)
-// router.post('/reservation',postReservation)
-// router.get('/reservation',getReservation)
-// router.post('/login',loginUser)
+router.get('/reservation',getReservation)
+router.post('/reservation',postReservation);
+router.delete('/reservations/:reservationId', deleteReservation);
 
 
-module.exports = router 
+
+
+module.exports = router

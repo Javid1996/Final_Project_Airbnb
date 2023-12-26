@@ -43,3 +43,10 @@
       margin-top: 8px;
       margin-bottom: 8px;
     }
+
+    .card__info__end{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: larger;
+    }
