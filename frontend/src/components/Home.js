@@ -13,11 +13,11 @@ import Header from './Header';
 
 function Home() {
   const [data, setData] = useState([]);
+  const [placeType, setPlaceType] = useState('');
 
-
+  console.log('PLACE TYPE ----->',placeType);
   useEffect(() => {
     const url = "http://localhost:4005/cards/";
-
 
     async function fetchData() {
       try {
@@ -86,16 +86,7 @@ function Home() {
     <div className="home">
       
       <Header onChange={handleInputChange}/>
-      <Banner />
-
-      {/* <Login/> */}
-
-      {/* <div className="home_section">
-        {data.map((el) => {
-          return console.log(el.name);
-        })}
-      </div> */}
-      
+      <Banner setPlaceType={setPlaceType}/>
 
       <div className="home_section">
       {Array.isArray(data) ? (

@@ -15,17 +15,17 @@ const {
 } = require('./controller')
 
 
-const authRouter = express.Router();
-authRouter.get('/user',getUser)
-authRouter.post('/sign-in',signIn)
-authRouter.post('/sign-up',signUp)
 
-router.get('/',getAllAd)
-router.get('/:card_id',getOneAd)
+// router.get('/user',getUser)
+// router.post('/sign-in',signIn)
+// router.post('/sign-up',signUp)
+
+router.get('/cards',getAllAd)
+router.get('/cards/:card_id',getOneAd)
 router.get('/places/:name',getPlaces)
 router.get('/reservation',getReservation)
 router.post('/reservation',postReservation);
-router.delete('/reservations/:reservationId', deleteReservation);
+router.delete('/reservation/:reservationId', deleteReservation);
 
 
 

@@ -1,6 +1,6 @@
 import React ,{useState,useEffect} from "react";
 import {connect} from 'react-redux';
-import Header from "./Header";
+import Header2 from "./Header 2";
 import '../Styles/Profile.css'
 import {star} from '../img/star.png'
 import {Button} from "@mui/material";
@@ -83,7 +83,7 @@ console.log('SavedReservation.......',savedReservations);
         
         <div className="profile">
             {/* <div className="upper_section"> */}
-        <Header/>
+        <Header2/>
        { props.card?
        
         props.card?._todoProduct.Carts.map((item)=>{

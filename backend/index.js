@@ -22,8 +22,9 @@ app.use((req, res, next) => {
   });
 
 app.use(express.json());
-app.use('/cards',router);
+app.use('/',router);
 // app.use('/auth',router.authRouter);
+
 app.get('/user',getUser)
 app.post('/sign-in',signIn)
 app.post('/sign-up',signUp)

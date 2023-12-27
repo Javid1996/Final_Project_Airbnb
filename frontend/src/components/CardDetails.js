@@ -12,12 +12,13 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import '../Styles/CardDetails.css'
 import { Routes,Route, Link } from "react-router-dom"
-import Header from "./Header.js";
+import Header2 from "./Header 2";
 import CalendarBan from './CalendarBan.js'
 import { FaStar } from "react-icons/fa";
 import { FaPhoneSquareAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Footer from "./Footer";
+
 
 function CardDetails(props){
     console.log('card props------>',props);
@@ -68,7 +69,7 @@ function CardDetails(props){
     return(
     
     <>
-     <Header/>
+     <Header2/>
     <CalendarBan/>
   
     <div className="card_details">
